@@ -1,3 +1,34 @@
 #EXTM3U
-#EXTINF:-1,Bloomberg TV US
+
+#EXTINF:-1 group-title="Business;News",Bloomberg TV US
 https://www.bloomberg.com/media-manifest/streams/us.m3u8
+
+#EXTINF:-1 group-title="Business;News",Asharq News
+https://live-news.asharq.com/asharq.m3u8
+
+#EXTINF:-1 group-title="Business;News",BFM Business
+https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8
+
+#EXTINF:-1 group-title="News",ABC News Live
+https://aegis-cloudfront-1.tubi.video/d6cbb0de-68e4-4f3b-82f9-bf5d526e0bde/index.m3u8
+
+#EXTINF:-1 group-title="News",Al Jazeera English
+https://live-hls-web-aje-fa.thehlive.com/AJE/index.m3u8
+
+#EXTINF:-1 group-title="News",DW English
+https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/master.m3u8
+
+#EXTINF:-1 group-title="News",France 24 English
+https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8
+
+#EXTINF:-1 group-title="News",TRT World
+https://mumbai-edge.smartplaytv.in/TRTWorld/index.m3u8
+
+#EXTINF:-1 group-title="News",Euronews English
+https://a-cdn.klowdtv.com/live3/euronews_720p/playlist.m3u8
+
+#EXTINF:-1 group-title="News",Al Arabiya English
+https://live.alarabiya.net/alarabiapublish/english/playlist_dvr.m3u8
+
+#EXTINF:-1 group-title="News",Africa 24 English
+https://edge20.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8
