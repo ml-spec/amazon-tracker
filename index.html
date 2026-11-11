@@ -47,14 +47,16 @@ h1{font-size:54px;line-height:1;margin:14px 0 8px;font-weight:800}.sub{font-size
 <script>
 const league = {
   season: 2026,
-  players:["Marwan","Omran","Talal","Youssef","Fadi Chams","Tarek","Hedi","Fadi N","Hoss","Aboudi","Samy","Karim F","Riaz","Moustafa","Abdo","Wadih","Cem","Imran","Dipu","Wassef","Samer"],
+  players:["Omran","Marwan","Youssef","Talal","Karim F","Fadi Chams","Tarek","Hedi","Fadi N","Hoss","Aboudi","Samy","Riaz","Moustafa","Joye","Abdo","Wadih","Cem","Imran","Dipu","Wassef","Samer"],
   nights:[
     {date:"2026-09-01", scores:{Omran:4,Talal:6,Hedi:3,Samy:1,Moustafa:2}},
     {date:"2026-09-08", scores:{Marwan:2,Omran:6,Aboudi:4,"Karim F":3,Abdo:1}},
+    {date:"2026-09-23", scores:{"Fadi Chams":6}},
     {date:"2026-09-29", scores:{Marwan:6,Omran:3,Youssef:4,Tarek:2,Hedi:1}},
     {date:"2026-10-14", scores:{Marwan:4,Omran:2,Talal:6,Youssef:1,Samy:3}},
     {date:"2026-10-20", scores:{Marwan:3,Youssef:6,Tarek:4,Hedi:2,Hoss:1}},
-    {date:"2026-11-03", scores:{Marwan:2,Youssef:1,"Fadi N":6,Hoss:4,Riaz:3}}
+    {date:"2026-11-03", scores:{Marwan:2,Youssef:1,"Fadi N":6,Hoss:4,Riaz:3}},
+    {date:"2026-11-10", scores:{Omran:6,Marwan:3,Youssef:1,"Karim F":4,Joye:2}}
   ]
 };
 const COLORS=["var(--mint)","var(--gold)","var(--blue)","var(--pink)"];
@@ -70,7 +72,7 @@ document.getElementById('dateRange').textContent=`${fmtDate(firstDate)}–${fmtD
 document.getElementById('yearNights').textContent=`${league.season} / ${league.nights.length} NIGHTS`;
 document.getElementById('kpis').innerHTML=`
 <div class="kpi"><div class="label">Championship leader</div><strong>${leader}</strong><small>${totals[leader]} points</small></div>
-<div class="kpi"><div class="label">Lead over ${second}</div><strong>${totals[leader]-totals[second]} points</strong><small>${totals[leader]-thirdPts} points ahead of joint third</small></div>
+<div class="kpi"><div class="label">Lead over ${second}</div><strong>${totals[leader]-totals[second]} points</strong><small>${totals[leader]-thirdPts} points ahead of third</small></div>
 <div class="kpi"><div class="label">League points</div><strong>${totalLeaguePoints}</strong><small>${perNight.every(v=>v===perNight[0])?perNight[0]+' awarded each night':'Across '+league.nights.length+' nights'}</small></div>
 <div class="kpi"><div class="label">The field</div><strong>${league.players.length} players</strong><small>${scoredPlayers.length} with recorded points</small></div>`;
 const maxPts=totals[leader];
@@ -84,7 +86,7 @@ for(let y=0;y<=maxY;y+=5){const yy=pad.t+(maxY-y)/(maxY)*(H-pad.t-pad.b);svg+=`<
 const xs=league.nights.map((_,i)=>pad.l+i*(W-pad.l-pad.r)/(league.nights.length-1)); league.nights.forEach((n,i)=>{svg+=`<text x="${xs[i]}" y="${H-10}" text-anchor="middle" fill="var(--muted)" font-size="12">${fmtDate(n.date,true)}</text>`});
 const legend=document.getElementById('legend'); let legendHtml='';
 top4.forEach((p,pi)=>{let cum=0,pts=[];league.nights.forEach((n,i)=>{cum+=n.scores[p]||0;const yy=pad.t+(maxY-cum)/maxY*(H-pad.t-pad.b);pts.push([xs[i],yy,cum])});const dash=p===top4[3]?' stroke-dasharray="4 4"':'';svg+=`<polyline points="${pts.map(q=>q[0]+','+q[1]).join(' ')}" fill="none" stroke="${COLORS[pi]}" stroke-width="3"${dash}/>`;pts.forEach((q,i)=>svg+=`<circle cx="${q[0]}" cy="${q[1]}" r="3.5" fill="${COLORS[pi]}" stroke="var(--bg)" stroke-width="1.5"/>`);const q=pts.at(-1);svg+=`<text x="${q[0]+15}" y="${q[1]+4}" fill="${COLORS[pi]}" font-size="14" font-weight="800">${q[2]}</text>`;legendHtml+=`<span style="color:${COLORS[pi]}"><i></i><em style="font-style:normal;color:var(--ink)">${p}</em></span>`}); svg+='</svg>';document.getElementById('chart').innerHTML=svg;legend.innerHTML=legendHtml;
-document.getElementById('chartNote').textContent=`${second} led early; ${leader} drew level on ${fmtDate(league.nights.at(-2).date,true)}, then moved ahead.`;
+document.getElementById('chartNote').textContent=`${leader} leads ${second} by ${totals[leader]-totals[second]} point${totals[leader]-totals[second]===1?'':'s'} after ${league.nights.length} recorded dates.`;
 const latest=league.nights.at(-1), latestResults=Object.entries(latest.scores).sort((a,b)=>b[1]-a[1]); document.getElementById('latestTitle').textContent=`Latest night: ${fmtDate(latest.date,true)}`;document.getElementById('latest').innerHTML=latestResults.map(([p,v])=>`<div class="result-row"><span>${p}</span><span class="result-bar"><i style="width:${v/6*100}%"></i></span><b>${v}</b></div>`).join('');
 document.getElementById('nightsTitle').textContent=`${league.nights.length} nights. ${league.nights.length} top scores.`;document.getElementById('nights').innerHTML=league.nights.map(n=>`<div><div class="night-date">${fmtDate(n.date,true)}</div>${Object.entries(n.scores).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`<div class="night-row"><span>${p}</span><b>${v}</b></div>`).join('')}</div>`).join('');
 const sixCounts=Object.fromEntries(league.players.map(p=>[p,league.nights.filter(n=>n.scores[p]===6).length])); const sixMax=Math.max(...Object.values(sixCounts)); const sixSpecial=league.players.filter(p=>sixCounts[p]===sixMax).join(' + '); const tieGroups={}; scoredPlayers.forEach(p=>(tieGroups[totals[p]]??=[]).push(p)); const dead=Object.entries(tieGroups).filter(([v,a])=>a.length>1&&+v>0).sort((a,b)=>+b[0]-+a[0])[0]; const late=Object.fromEntries(league.players.map(p=>[p,league.nights.slice(-3).reduce((s,n)=>s+(n.scores[p]||0),0)])); const lateLeader=[...league.players].sort((a,b)=>late[b]-late[a])[0];
