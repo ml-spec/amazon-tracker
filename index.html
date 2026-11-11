@@ -31,7 +31,7 @@ h1{font-size:54px;line-height:1;margin:14px 0 8px;font-weight:800}.sub{font-size
 </head>
 <body>
 <div class="wrap">
-  <div class="topline"><div><div class="kicker">The Poker League</div><h1>The chase is on.</h1><div class="sub" id="dateRange"></div></div><div class="year" id="yearNights"></div></div>
+  <div class="topline"><div><div class="kicker">The Poker League</div><h1>The chase is on.</h1><div class="sub" id="weeklyHeadline"></div><div class="sub" id="dateRange"></div></div><div class="year" id="yearNights"></div></div>
   <div class="rule"></div><section class="kpis" id="kpis"></section><div class="rule"></div>
   <section class="main">
     <div><div class="section-title"><span class="section-no">01</span><h2>Championship standings</h2></div><div id="standings"></div></div>
@@ -68,6 +68,7 @@ let denseRank=0,lastScore=null; const ranks={}; standings.forEach(p=>{if(totals[
 const scoredPlayers=league.players.filter(p=>totals[p]>0); const leader=standings[0], second=standings[1], thirdPts=totals[standings[2]];
 const totalLeaguePoints=Object.values(totals).reduce((a,b)=>a+b,0); const perNight=league.nights.map(n=>Object.values(n.scores).reduce((a,b)=>a+b,0));
 const firstDate=league.nights[0].date,lastDate=league.nights.at(-1).date;
+document.getElementById('weeklyHeadline').textContent=`${leader} edges ahead.`;
 document.getElementById('dateRange').textContent=`${fmtDate(firstDate)}–${fmtDate(lastDate)}`;
 document.getElementById('yearNights').textContent=`${league.season} / ${league.nights.length} NIGHTS`;
 document.getElementById('kpis').innerHTML=`
