@@ -56,7 +56,8 @@ const league = {
     {date:"2026-10-14", scores:{Marwan:4,Omran:2,Talal:6,Youssef:1,Samy:3}},
     {date:"2026-10-20", scores:{Marwan:3,Youssef:6,Tarek:4,Hedi:2,Hoss:1}},
     {date:"2026-11-03", scores:{Marwan:2,Youssef:1,"Fadi N":6,Hoss:4,Riaz:3}},
-    {date:"2026-11-10", scores:{Omran:6,Marwan:3,Youssef:1,"Karim F":4,Joye:2}}
+    {date:"2026-11-10", scores:{Omran:6,Marwan:3,Youssef:1,"Karim F":4,Joye:2}},
+    {date:"2026-11-24", scores:{Hoss:6,Omran:4,Marwan:3,Dipu:2,"Fadi Chams":1}}
   ]
 };
 const COLORS=["var(--mint)","var(--gold)","var(--blue)","var(--pink)"];
@@ -68,7 +69,7 @@ let denseRank=0,lastScore=null; const ranks={}; standings.forEach(p=>{if(totals[
 const scoredPlayers=league.players.filter(p=>totals[p]>0); const leader=standings[0], second=standings[1], thirdPts=totals[standings[2]];
 const totalLeaguePoints=Object.values(totals).reduce((a,b)=>a+b,0); const perNight=league.nights.map(n=>Object.values(n.scores).reduce((a,b)=>a+b,0));
 const firstDate=league.nights[0].date,lastDate=league.nights.at(-1).date;
-document.getElementById('weeklyHeadline').textContent=`${leader} edges ahead.`;
+document.getElementById('weeklyHeadline').textContent=`${leader} keeps the edge.`;
 document.getElementById('dateRange').textContent=`${fmtDate(firstDate)}–${fmtDate(lastDate)}`;
 document.getElementById('yearNights').textContent=`${league.season} / ${league.nights.length} NIGHTS`;
 document.getElementById('kpis').innerHTML=`
